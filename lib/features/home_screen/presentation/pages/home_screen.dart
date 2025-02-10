@@ -20,18 +20,15 @@ class HomeScreen extends StatelessWidget {
             width: double.infinity,
             fit: BoxFit.cover,),
           ),
-          // Positioned( 
-          //   right: 50.w,
-          //   top: 20.h,
-          //   child: Image.asset(ImageAssets.logo)),
-      
+       
+  
             SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Center(child: Container(child: Image.asset(ImageAssets.logo))),
-                  PrayerTime(),
+                  PrayerTime(), // widget of the bloc 
               
                   
                   SizedBox(height: 10.h,),

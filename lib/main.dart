@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:islami/config/app_router.dart';
 import 'package:islami/config/routes.dart';
+import 'package:islami/core/di/di.dart';
 import 'package:islami/features/home_screen/presentation/pages/home_screen.dart';
+import 'package:islami/my_bloc_observer.dart';
 
 void main() {
+  Bloc.observer = MyBlocObserver();
+  configureDependencies();
+  AppRouter.initialize();
   runApp(const MyApp());
 }
 

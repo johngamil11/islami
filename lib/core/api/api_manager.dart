@@ -1,9 +1,10 @@
 
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:islami/core/utils/app_constans.dart';
 
 
-// @singleton
+@singleton
 class ApiManager {
   late Dio dio;
 
