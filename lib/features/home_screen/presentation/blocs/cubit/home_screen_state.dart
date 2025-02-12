@@ -9,8 +9,9 @@ final class HomeScreenLoading extends HomeScreenState {}
 
 final class HomeScreenLoaded extends HomeScreenState {
   DataEntity? prayerTime;
-  HomeScreenLoaded({required this.prayerTime});
+  HomeScreenLoaded({ required this.prayerTime });
 }
+
 
 final class HomeScreenError extends HomeScreenState {
   Failures failures;

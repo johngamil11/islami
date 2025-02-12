@@ -10,7 +10,8 @@ class PrayerTimeUseCase {
   PrayerTimeUseCase({required this.homeScreenRepository});
     
 
-    Future <Either<Failures , PrayerTimeResponseEntity>> invoke(){
-      return homeScreenRepository.prayerTime();
+    Future <Either<Failures , PrayerTimeResponseEntity>> invoke(String city , String country){
+      return homeScreenRepository.prayerTime(city , country);
     }
+   
   }

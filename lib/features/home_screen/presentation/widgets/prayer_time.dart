@@ -6,14 +6,26 @@ import 'package:islami/features/home_screen/presentation/blocs/cubit/home_screen
 import 'package:islami/features/home_screen/presentation/widgets/prayer_icon.dart';
 
 class PrayerTime extends StatelessWidget {
-  const PrayerTime({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeScreenCubit, HomeScreenState>(
-      bloc: BlocProvider.of<HomeScreenCubit>(context)..getPrayerTime(),
+      bloc:
+       BlocProvider.of<HomeScreenCubit>(context)..getPrayerTime(),
+         buildWhen: (previous, current) => previous != current, // يمنع إعادة البناء إذا لم تتغير البيانات
       builder: (context, state) {
-        if (state is HomeScreenLoaded) {
+        if(state is HomeScreenLoading){
+          return Center(child: CircularProgressIndicator(color: ColorManager.primary,));
+        }
+        else if (state is HomeScreenLoaded) {
+          String gregorianDay = convertNumberToArabic(state.prayerTime!.date!.gregorian!.day.toString());
+          String gregorianYear = convertNumberToArabic(state.prayerTime!.date!.gregorian!.year.toString());
+          String gregorianMonth = monthsArabic[state.prayerTime!.date!.gregorian!.month!.en] ?? '';
+
+          String hijriDay = convertNumberToArabic(state.prayerTime!.date!.hijri!.day.toString());
+          String hijriYear = convertNumberToArabic(state.prayerTime!.date!.hijri!.year.toString());
+          String hijriMonth = state.prayerTime!.date!.hijri!.month!.ar ?? '';
+
           return Container(
             width: 320.w,
             height: 280.h,
@@ -73,8 +85,10 @@ class PrayerTime extends StatelessWidget {
                         ]),
                       ),
                       Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Container(
+                            alignment: Alignment.center,
                             height: 50.h,
                             width: 130.w,
                             decoration: BoxDecoration(
@@ -83,18 +97,31 @@ class PrayerTime extends StatelessWidget {
                                 color: ColorManager.primary,
                               ),
                             ),
-                            child: Text(
-                              state.prayerTime!.meta!.longitude.toString(),
-                              style: TextStyle(
-                                  color: ColorManager.white,
-                                  decoration: TextDecoration.none,
-                                  fontSize: 14),
+                            child: Column(
+                              children: [
+                                Text(
+                               "$gregorianDay $gregorianMonth $gregorianYear م",
+
+                                  style: TextStyle(
+                                      color: ColorManager.white,
+                                      decoration: TextDecoration.none,
+                                      fontSize: 16),
+                                ),
+                                Text(
+                                "$hijriDay $hijriMonth $hijriYear هـ",
+                                  style: TextStyle(
+                                      color: ColorManager.white,
+                                      decoration: TextDecoration.none,
+                                      fontSize: 16),
+                                ),
+                              ],
                             ),
                           ),
                           SizedBox(
                             height: 3.h,
                           ),
                           Container(
+                            alignment: Alignment.center,
                             height: 50.h,
                             width: 130.w,
                             decoration: BoxDecoration(
@@ -103,11 +130,11 @@ class PrayerTime extends StatelessWidget {
                                   color: ColorManager.primary,
                                 )),
                             child: Text(
-                              'الشروق',
+                              " الشروق : ${ convertNumberToArabic(state.prayerTime!.timings!.sunrise ??'')}",
                               style: TextStyle(
                                   color: ColorManager.white,
                                   decoration: TextDecoration.none,
-                                  fontSize: 14),
+                                  fontSize: 16),
                             ),
                           ),
                           SizedBox(
@@ -140,7 +167,8 @@ class PrayerTime extends StatelessWidget {
                     PrayerIcon(
                       image: 'assets/images/maghrib.png',
                       text: 'المغرب',
-                      time: state.prayerTime!.timings!.maghrib ?? '',
+                      time: 
+                      state.prayerTime!.timings!.maghrib ?? ''
                     ),
                     PrayerIcon(
                       image: 'assets/images/asr.png',
@@ -167,6 +195,31 @@ class PrayerTime extends StatelessWidget {
           color: Colors.amber,
         );
       },
-    ); // todo: mawaqit el sala;
+    ); 
   }
+    final Map<String, String> monthsArabic = {
+    "January": "يناير",
+    "February": "فبراير",
+    "March": "مارس",
+    "April": "أبريل",
+    "May": "مايو",
+    "June": "يونيو",
+    "July": "يوليو",
+    "August": "أغسطس",
+    "September": "سبتمبر",
+    "October": "أكتوبر",
+    "November": "نوفمبر",
+    "December": "ديسمبر",
+  };
+
+    String convertNumberToArabic(String number) {
+    const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    return number.split('').map((char) {
+      if (RegExp(r'\d').hasMatch(char)) {
+        return arabicNumbers[int.parse(char)];
+      }
+      return char;
+    }).join();
+  }
+
 }

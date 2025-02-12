@@ -13,15 +13,15 @@ class ApiManager {
   }
 
   Future<Response> getData(String endPoint,
-      {Map<String, dynamic>? headers, Map<String, dynamic>? body , String? query , String? language}) {
+      {Map<String, dynamic>? headers, Map<String, dynamic>? body ,String? city , String? country, String? query , String? language}) {
        String todayDate = "${DateTime.now().day.toString().padLeft(2, '0')}-"
     "${DateTime.now().month.toString().padLeft(2, '0')}-"
     "${DateTime.now().year.toString().padLeft(2, '0')}";
     return dio.get(AppConstans.baseUrl + endPoint + todayDate ,
         data: body,
         queryParameters: {
-          'city' : 'cairo',
-          'country' : 'egypt'
+          'city' : city ?? 'cairo',
+          'country' : country ??'egypt'
         }, 
         options: Options(headers: headers, validateStatus: (status) => true));
   }

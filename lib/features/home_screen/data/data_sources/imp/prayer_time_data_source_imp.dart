@@ -6,20 +6,21 @@ import 'package:islami/core/api/end_point.dart';
 import 'package:islami/core/errors/failurs.dart';
 import 'package:islami/features/home_screen/data/data_sources/prayer_time_data_source.dart';
 import 'package:islami/features/home_screen/data/models/prayer_time_response_dto.dart';
+import 'package:islami/features/home_screen/domain/entities/prayer_time_response_entity.dart';
 
 @Injectable(as: PrayerTimeDataSource)
 class PrayerTimeDataSourceImp implements PrayerTimeDataSource {
   ApiManager apiManager;
   PrayerTimeDataSourceImp({required this.apiManager});
   @override
-  Future<Either<Failures, PrayerTimeResponseDto>> prayerTime() async {
+  Future<Either<Failures, PrayerTimeResponseDto>> prayerTime(String city , String country) async {
     try {
       final List<ConnectivityResult> connectivityResult =
           await (Connectivity().checkConnectivity());
       await Connectivity().checkConnectivity();
       if (connectivityResult.contains(ConnectivityResult.mobile) ||
           connectivityResult.contains(ConnectivityResult.wifi)) {
-        var response = await apiManager.getData('${EndPoint.Mawaqit}');
+        var response = await apiManager.getData('${EndPoint.Mawaqit}' , city: city , country: country);
         print(response.data);
 
         var getPrayerTime = PrayerTimeResponseDto.fromJson(response.data);
@@ -37,4 +38,5 @@ class PrayerTimeDataSourceImp implements PrayerTimeDataSource {
       return Left(Failures(errorMessage: e.toString()));
     }
   }
+
 }

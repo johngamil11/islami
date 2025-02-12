@@ -61,7 +61,7 @@ class PrayerIcon extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.all(2),
-      height: 90.h,
+      height: 100.h,
       width: 57.w,
       decoration: BoxDecoration(
         color: const Color.fromARGB(141, 33, 33, 33),

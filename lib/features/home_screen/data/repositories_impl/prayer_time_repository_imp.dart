@@ -9,9 +9,10 @@ class PrayerTimeRepositoryImp implements PrayerTimeRepository {
   PrayerTimeDataSource prayerTimeDataSource ;
   PrayerTimeRepositoryImp({required this.prayerTimeDataSource});
   @override
-  Future<Either<Failures, PrayerTimeResponseEntity>> prayerTime()async {
-    var either = await prayerTimeDataSource.prayerTime();
+  Future<Either<Failures, PrayerTimeResponseEntity>> prayerTime(String city , String country)async {
+    var either = await prayerTimeDataSource.prayerTime(city , country);
     return either.fold((error)=> Left(error), (response)=>Right(response));
   }
+  
 
 }
