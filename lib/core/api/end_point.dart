@@ -1,3 +1,4 @@
 class EndPoint {
-  static const Mawaqit = '/timingsByCity/';
+  static const prayerTime = '/timingsByCity/';
+  static const nextPrayerTime = '/nextPrayer';
 }

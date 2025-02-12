@@ -3,27 +3,34 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:islami/core/utils/color_manager.dart';
 import 'package:islami/features/home_screen/presentation/blocs/cubit/home_screen_cubit.dart';
+import 'package:islami/features/home_screen/presentation/widgets/next_prayer_time.dart';
 import 'package:islami/features/home_screen/presentation/widgets/prayer_icon.dart';
 
 class PrayerTime extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeScreenCubit, HomeScreenState>(
-      bloc:
-       BlocProvider.of<HomeScreenCubit>(context)..getPrayerTime(),
-         buildWhen: (previous, current) => previous != current, // يمنع إعادة البناء إذا لم تتغير البيانات
+      // bloc: BlocProvider.of<HomeScreenCubit>(context)
+      //   ..getPrayerTime()..getNextPrayerTime(),
+      buildWhen: (previous, current) => previous != current,
       builder: (context, state) {
-        if(state is HomeScreenLoading){
-          return Center(child: CircularProgressIndicator(color: ColorManager.primary,));
-        }
-        else if (state is HomeScreenLoaded) {
-          String gregorianDay = convertNumberToArabic(state.prayerTime!.date!.gregorian!.day.toString());
-          String gregorianYear = convertNumberToArabic(state.prayerTime!.date!.gregorian!.year.toString());
-          String gregorianMonth = monthsArabic[state.prayerTime!.date!.gregorian!.month!.en] ?? '';
+        if (state is NextPrayerTimeLoading) {
+          return Center(
+              child: CircularProgressIndicator(
+            color: ColorManager.primary,
+          ));
+        } else if (state is HomeScreenLoaded) {
+          String gregorianDay = convertNumberToArabic(
+              state.prayerTime!.date!.gregorian!.day.toString());
+          String gregorianYear = convertNumberToArabic(
+              state.prayerTime!.date!.gregorian!.year.toString());
+          String gregorianMonth =
+              monthsArabic[state.prayerTime!.date!.gregorian!.month!.en] ?? '';
 
-          String hijriDay = convertNumberToArabic(state.prayerTime!.date!.hijri!.day.toString());
-          String hijriYear = convertNumberToArabic(state.prayerTime!.date!.hijri!.year.toString());
+          String hijriDay = convertNumberToArabic(
+              state.prayerTime!.date!.hijri!.day.toString());
+          String hijriYear = convertNumberToArabic(
+              state.prayerTime!.date!.hijri!.year.toString());
           String hijriMonth = state.prayerTime!.date!.hijri!.month!.ar ?? '';
 
           return Container(
@@ -42,48 +49,7 @@ class PrayerTime extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        height: 150.h,
-                        width: 150.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                            color: ColorManager.primary,
-                          ),
-                        ),
-                        child: Stack(alignment: Alignment.center, children: [
-                          Image.asset('assets/images/circle.png'),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'المغرب',
-                                style: TextStyle(
-                                  color: ColorManager.white,
-                                  decoration: TextDecoration.none,
-                                  fontSize: 18,
-                                ),
-                              ),
-                              Text(
-                                'بعد',
-                                style: TextStyle(
-                                  color: ColorManager.white,
-                                  decoration: TextDecoration.none,
-                                  fontSize: 18,
-                                ),
-                              ),
-                              Text(
-                                '04:15:07',
-                                style: TextStyle(
-                                  color: ColorManager.white,
-                                  decoration: TextDecoration.none,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ],
-                          )
-                        ]),
-                      ),
+                      NextPrayerTime(),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -100,15 +66,14 @@ class PrayerTime extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text(
-                               "$gregorianDay $gregorianMonth $gregorianYear م",
-
+                                  "$gregorianDay $gregorianMonth $gregorianYear م",
                                   style: TextStyle(
                                       color: ColorManager.white,
                                       decoration: TextDecoration.none,
                                       fontSize: 16),
                                 ),
                                 Text(
-                                "$hijriDay $hijriMonth $hijriYear هـ",
+                                  "$hijriDay $hijriMonth $hijriYear هـ",
                                   style: TextStyle(
                                       color: ColorManager.white,
                                       decoration: TextDecoration.none,
@@ -130,7 +95,7 @@ class PrayerTime extends StatelessWidget {
                                   color: ColorManager.primary,
                                 )),
                             child: Text(
-                              " الشروق : ${ convertNumberToArabic(state.prayerTime!.timings!.sunrise ??'')}",
+                              " الشروق : ${convertNumberToArabic(state.prayerTime!.timings!.sunrise ?? '')}",
                               style: TextStyle(
                                   color: ColorManager.white,
                                   decoration: TextDecoration.none,
@@ -165,11 +130,9 @@ class PrayerTime extends StatelessWidget {
                       time: state.prayerTime!.timings!.isha ?? '',
                     ),
                     PrayerIcon(
-                      image: 'assets/images/maghrib.png',
-                      text: 'المغرب',
-                      time: 
-                      state.prayerTime!.timings!.maghrib ?? ''
-                    ),
+                        image: 'assets/images/maghrib.png',
+                        text: 'المغرب',
+                        time: state.prayerTime!.timings!.maghrib ?? ''),
                     PrayerIcon(
                       image: 'assets/images/asr.png',
                       text: 'العصر',
@@ -195,9 +158,10 @@ class PrayerTime extends StatelessWidget {
           color: Colors.amber,
         );
       },
-    ); 
+    );
   }
-    final Map<String, String> monthsArabic = {
+
+  final Map<String, String> monthsArabic = {
     "January": "يناير",
     "February": "فبراير",
     "March": "مارس",
@@ -212,7 +176,7 @@ class PrayerTime extends StatelessWidget {
     "December": "ديسمبر",
   };
 
-    String convertNumberToArabic(String number) {
+  String convertNumberToArabic(String number) {
     const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
     return number.split('').map((char) {
       if (RegExp(r'\d').hasMatch(char)) {
@@ -221,5 +185,4 @@ class PrayerTime extends StatelessWidget {
       return char;
     }).join();
   }
-
 }

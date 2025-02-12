@@ -20,6 +20,8 @@ import '../../features/home_screen/data/repositories_impl/prayer_time_repository
     as _i827;
 import '../../features/home_screen/domain/repositories/prayer_time_repository.dart'
     as _i302;
+import '../../features/home_screen/domain/use_cases/next_prayer_time_use_case%20.dart'
+    as _i683;
 import '../../features/home_screen/domain/use_cases/prayer_time_use_case.dart'
     as _i830;
 import '../../features/home_screen/presentation/blocs/cubit/home_screen_cubit.dart'
@@ -40,10 +42,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i1047.ApiManager>(() => _i1047.ApiManager());
     gh.factory<_i375.PrayerTimeDataSource>(() =>
         _i288.PrayerTimeDataSourceImp(apiManager: gh<_i1047.ApiManager>()));
+    gh.factory<_i683.NextPrayerTimeUseCase>(() => _i683.NextPrayerTimeUseCase(
+        homeScreenRepository: gh<_i302.PrayerTimeRepository>()));
     gh.factory<_i830.PrayerTimeUseCase>(() => _i830.PrayerTimeUseCase(
         homeScreenRepository: gh<_i302.PrayerTimeRepository>()));
     gh.factory<_i282.HomeScreenCubit>(() => _i282.HomeScreenCubit(
-        prayerTimeUseCase: gh<_i830.PrayerTimeUseCase>()));
+          prayerTimeUseCase: gh<_i830.PrayerTimeUseCase>(),
+          nextPrayerTimeUseCase: gh<_i683.NextPrayerTimeUseCase>(),
+        ));
     gh.factory<_i827.PrayerTimeRepositoryImp>(() =>
         _i827.PrayerTimeRepositoryImp(
             prayerTimeDataSource: gh<_i375.PrayerTimeDataSource>()));
