@@ -9,12 +9,6 @@ class NextPrayerTime extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeScreenCubit, HomeScreenState>(
-      builder: (context, state) {
-        print("Current state:::::::::: $state");
-        if (state is NextPrayerTimeLoading) {
-          return CircularProgressIndicator();
-        } else if (state is NextPrayerTimeLoaded) {
           return Container(
             height: 150.h,
             width: 150.w,
@@ -57,10 +51,5 @@ class NextPrayerTime extends StatelessWidget {
               )
             ]),
           );
-        } else {
-          return Container(child: Text( 'no'),);
-        }
-      },
-    );
   }
 }

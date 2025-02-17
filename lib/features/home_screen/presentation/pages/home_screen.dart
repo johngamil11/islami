@@ -13,7 +13,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeScreenCubit.get(context)..getPrayerTime()..getNextPrayerTime(),
+      create: (context) {
+        return HomeScreenCubit.get(context)..getPrayerTime() ;
+        },
       child: SafeArea(
         child: Stack(
           children: [
@@ -33,7 +35,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Center(
                       child: Container(child: Image.asset(ImageAssets.logo))),
-                  PrayerTime(), // widget of the bloc
+                  PrayerTime(),
 
                   SizedBox(
                     height: 10.h,

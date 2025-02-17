@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:islami/core/utils/color_manager.dart';
-import 'package:intl/intl.dart'; // نحتاجها لتحويل الوقت
+import 'package:intl/intl.dart'; 
 
 class PrayerIcon extends StatelessWidget {
   String text;
