@@ -4,3 +4,16 @@ part of 'home_screen_cubit.dart';
 sealed class HomeScreenState {}
 
 final class HomeScreenInitial extends HomeScreenState {}
+
+final class HomeScreenLoading extends HomeScreenState {}
+
+final class HomeScreenLoaded extends HomeScreenState {
+  DataEntity? prayerTime;
+  HomeScreenLoaded({required this.prayerTime});
+}
+
+final class HomeScreenError extends HomeScreenState {
+  Failures failures;
+  HomeScreenError({required this.failures});
+}
+
