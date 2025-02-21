@@ -9,6 +9,10 @@ import 'package:islami/features/home_screen/domain/use_cases/next_prayer_time_us
 import 'package:islami/features/home_screen/domain/use_cases/prayer_time_use_case.dart';
 import 'package:islami/features/home_screen/presentation/blocs/cubit/home_screen_cubit.dart';
 import 'package:islami/features/home_screen/presentation/pages/home_screen.dart';
+import 'package:islami/features/quran_screen/data/data_sources/local_data_source.dart';
+import 'package:islami/features/quran_screen/data/repositories_impl/quran_repository_imp.dart';
+import 'package:islami/features/quran_screen/presentation/blocs/cubit/quran_cubit.dart';
+import 'package:islami/features/quran_screen/presentation/pages/quran_screen.dart';
 
 class AppRouter {
   static late PrayerTimeUseCase prayerTimeUseCase;
@@ -38,6 +42,14 @@ class AppRouter {
                   create: (context) => homeScreenCubit,
                   child: HomeScreen(),
                 ));
+      case Routes.QuranScreen:
+        return MaterialPageRoute(
+            builder: (_) =>  BlocProvider(
+                  create: (context) => QuranCubit(repository: QuranRepositoryImp(
+                    localDataSource: LocalDataSource())),
+                  child: QuranScreen(),
+                )
+                );
 
       default:
         return null;
