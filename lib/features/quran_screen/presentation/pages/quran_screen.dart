@@ -27,7 +27,8 @@ class QuranScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             'القرآن الكريم',
-            style: TextStyle(color: ColorManager.logo),
+            style: TextStyle(color: ColorManager.logo ,  fontFamily: 'QuranHadith',
+),
           ),
           centerTitle: true,
           iconTheme: IconThemeData(color: ColorManager.logo),
@@ -49,31 +50,65 @@ class QuranScreen extends StatelessWidget {
               height: 8.h,
             ),
 
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              width: 390.w,
-              height: 55.h,
-              decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  border: Border.all(color: ColorManager.primary),
-                  borderRadius: BorderRadius.circular(25)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'اسم السورة ',
-                    style: TextStyle(color: ColorManager.white, fontSize: 22),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  Image.asset('assets/images/search_icon.png'),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                ],
+            // Container(
+            //   margin: EdgeInsets.symmetric(horizontal: 10),
+            //   width: 390.w,
+            //   height: 55.h,
+            //   decoration: BoxDecoration(
+            //       color: Colors.transparent,
+            //       border: Border.all(color: ColorManager.primary),
+            //       borderRadius: BorderRadius.circular(25)),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.end,
+            //     children: [
+            //       Text(
+            //         'اسم السورة ',
+            //         style: TextStyle(color: ColorManager.white, fontSize: 22),
+            //       ),
+            //       SizedBox(
+            //         width: 10.w,
+            //       ),
+            //       Image.asset('assets/images/search_icon.png'),
+            //       SizedBox(
+            //         width: 10.w,
+            //       ),
+            //     ],
+            //   ),
+            // ),
+           
+           TextField( 
+            style: TextStyle(color: ColorManager.white,fontFamily: 'QuranHadith',),
+             textAlign: TextAlign.right,
+            textDirection: TextDirection.rtl,
+            onChanged: (query) {
+             QuranCubit.get(context).searchSurah(query);
+                },
+              decoration: InputDecoration(
+              hintText: "...ابحث عن سورة" ,
+              
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: ColorManager.primary , width: 2
+                ),
+                borderRadius: BorderRadius.circular(25),
               ),
-            ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25),
+                borderSide: BorderSide(
+                  color: ColorManager.primary , width: 2
+                ),
+                
+              ),
+              hintStyle: TextStyle(
+                color: ColorManager.white , 
+                fontSize: 16
+              ) ,
+              suffixIcon: Image.asset('assets/images/search_icon.png'),
+              ),
+              
+              
+              ),
+
             SizedBox(
               height: 10.h,
             ),
@@ -127,7 +162,8 @@ class QuranScreen extends StatelessWidget {
                             InkWell(
                            onTap: () {
                   final quranCubit = QuranCubit.get(context);
-                  quranCubit.loadSurahContent(index);
+                    int originalIndex = quranCubit.surahNames.indexOf(state[index]);
+                quranCubit.loadSurahContent(originalIndex);
 
                   Navigator.push(
                     context,
@@ -135,19 +171,24 @@ class QuranScreen extends StatelessWidget {
                       builder: (context) => BlocProvider.value(
                         value: quranCubit,
                         child: QuranDetailsScreen(
+                          
                           title: state[index],
                         ),
                       ),
                     ),
                   ).then((_) {
-                    // عند الرجوع إلى الشاشة، استعد أسماء السور
                     quranCubit.resetToSurahNames();
                   });
                 },
                               child: SuraItem(
                                 suraName: state[index],
-                                number: index +1 ,
-                                  verseCount: QuranCubit.get(context).surahVersesCount[index], // عدد الآيات الصحيح
+                                 number: QuranCubit.get(context).surahNames.contains(state[index]) 
+      ? QuranCubit.get(context).surahNames.indexOf(state[index]) + 1
+      : 1,
+  verseCount: QuranCubit.get(context).surahNames.contains(state[index])
+      ? QuranCubit.get(context).surahVersesCount[
+          QuranCubit.get(context).surahNames.indexOf(state[index])]
+      : 7, 
                               ),
                             ),
                             SizedBox(

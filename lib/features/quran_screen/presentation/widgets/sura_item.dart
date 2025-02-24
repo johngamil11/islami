@@ -28,6 +28,8 @@ class SuraItem extends StatelessWidget {
                       suraName,
                       style: TextStyle(
                         color: ColorManager.white,
+                      fontFamily: 'QuranHadith',
+
                         fontSize: 25.sp,
                         fontWeight: FontWeight.bold,
                       ),
@@ -38,6 +40,7 @@ class SuraItem extends StatelessWidget {
                       "${convertToArabicNumber(verseCount)} آيات",
                       style: TextStyle(
                         color: ColorManager.white,
+                        
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
                       ),
