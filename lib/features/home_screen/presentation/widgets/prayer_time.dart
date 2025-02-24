@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:islami/core/utils/arabic_function.dart';
 import 'package:islami/core/utils/color_manager.dart';
 import 'package:islami/features/home_screen/presentation/blocs/cubit/home_screen_cubit.dart';
 import 'package:islami/features/home_screen/presentation/widgets/prayer_icon.dart';
@@ -75,7 +76,7 @@ class PrayerTime extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                  cubit.timeRemaining ?? '',
+                                  convertNumberToArabic(cubit.timeRemaining ?? '') ,
                                 style: TextStyle(
                                   color: ColorManager.white,
                                   decoration: TextDecoration.none,

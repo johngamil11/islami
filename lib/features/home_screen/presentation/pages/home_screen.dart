@@ -6,6 +6,10 @@ import 'package:islami/core/utils/image_assets.dart';
 import 'package:islami/features/home_screen/presentation/blocs/cubit/home_screen_cubit.dart';
 import 'package:islami/features/home_screen/presentation/widgets/icon_view.dart';
 import 'package:islami/features/home_screen/presentation/widgets/prayer_time.dart';
+import 'package:islami/features/quran_screen/data/data_sources/local_data_source.dart';
+import 'package:islami/features/quran_screen/data/repositories_impl/quran_repository_imp.dart';
+import 'package:islami/features/quran_screen/presentation/blocs/cubit/quran_cubit.dart';
+import 'package:islami/features/quran_screen/presentation/pages/quran_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -40,30 +44,43 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: 10.h,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        IconView(
-                          text: 'سبحة',
-                          image: 'assets/images/sebha.png',
-                        ),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        IconView(
-                          text: 'حديث',
-                          image: 'assets/images/hadith.png',
-                        ),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        IconView(
-                          text: 'قران',
-                          image: 'assets/images/quran.png',
-                        ),
-                      ],
+                  Material(
+                    color: Colors.transparent,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconView(
+                            text: 'سبحة',
+                            image: 'assets/images/sebha.png',
+                          ),
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          IconView(
+                            text: 'حديث',
+                            image: 'assets/images/hadith.png',
+                          ),
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          InkWell(
+                            onTap:(){
+                               Navigator.of(context).push(MaterialPageRoute(builder: (context) =>BlocProvider(
+                           create: (context) => QuranCubit(
+                            repository: QuranRepositoryImp(localDataSource: LocalDataSource()),
+                                  ),
+                          child: QuranScreen(),
+                                          ),))
+                               ;},
+                            child: IconView(
+                              text: 'القرآن الكريم',
+                              image: 'assets/images/quran.png',
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
