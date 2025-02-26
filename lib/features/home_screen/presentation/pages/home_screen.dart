@@ -3,6 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:islami/core/utils/color_manager.dart';
 import 'package:islami/core/utils/image_assets.dart';
+import 'package:islami/features/Hadith_screen/data/data_sources/local_data_source.dart';
+import 'package:islami/features/Hadith_screen/data/repositories_impl/hadith_repository_imp.dart';
+import 'package:islami/features/Hadith_screen/presentation/blocs/cubit/hadith_cubit.dart';
+import 'package:islami/features/Hadith_screen/presentation/pages/Hadith_screen.dart';
 import 'package:islami/features/home_screen/presentation/blocs/cubit/home_screen_cubit.dart';
 import 'package:islami/features/home_screen/presentation/widgets/icon_view.dart';
 import 'package:islami/features/home_screen/presentation/widgets/prayer_time.dart';
@@ -18,8 +22,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return HomeScreenCubit.get(context)..getPrayerTime() ;
-        },
+        return HomeScreenCubit.get(context)..getPrayerTime();
+      },
       child: SafeArea(
         child: Stack(
           children: [
@@ -40,7 +44,6 @@ class HomeScreen extends StatelessWidget {
                   Center(
                       child: Container(child: Image.asset(ImageAssets.logo))),
                   PrayerTime(),
-
                   SizedBox(
                     height: 10.h,
                   ),
@@ -58,22 +61,36 @@ class HomeScreen extends StatelessWidget {
                           SizedBox(
                             width: 10.w,
                           ),
-                          IconView(
-                            text: 'حديث',
-                            image: 'assets/images/hadith.png',
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => BlocProvider(
+                                            create: (context) => HadithCubit(HadithRepositoryImp(localDataSource: HadithLocalDataSource()  )),
+                                            child: HadithScreen(),
+                                          )));
+                            },
+                            child: IconView(
+                              text: 'حديث',
+                              image: 'assets/images/hadith.png',
+                            ),
                           ),
                           SizedBox(
                             width: 10.w,
                           ),
                           InkWell(
-                            onTap:(){
-                               Navigator.of(context).push(MaterialPageRoute(builder: (context) =>BlocProvider(
-                           create: (context) => QuranCubit(
-                            repository: QuranRepositoryImp(localDataSource: LocalDataSource()),
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => BlocProvider(
+                                  create: (context) => QuranCubit(
+                                    repository: QuranRepositoryImp(
+                                        localDataSource: LocalDataSource()),
                                   ),
-                          child: QuranScreen(),
-                                          ),))
-                               ;},
+                                  child: QuranScreen(),
+                                ),
+                              ));
+                            },
                             child: IconView(
                               text: 'القرآن الكريم',
                               image: 'assets/images/quran.png',
