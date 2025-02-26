@@ -19,7 +19,7 @@ class HadithScreen extends StatelessWidget {
         Opacity(
           opacity: 0.3,
           child: Image.asset(
-            'assets/images/quran_background.png',
+            'assets/images/hadith background.png',
             fit: BoxFit.cover,
             height: double.infinity,
             width: double.infinity,
