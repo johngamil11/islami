@@ -12,6 +12,14 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../features/azkar_screen/data/data_sources/local_data_source.dart'
+    as _i125;
+import '../../features/azkar_screen/data/repositories_impl/azkar_repository_imp.dart'
+    as _i90;
+import '../../features/Hadith_screen/data/data_sources/local_data_source.dart'
+    as _i515;
+import '../../features/Hadith_screen/data/repositories_impl/hadith_repository_imp.dart'
+    as _i539;
 import '../../features/home_screen/data/data_sources/imp/prayer_time_data_source_imp.dart'
     as _i288;
 import '../../features/home_screen/data/data_sources/prayer_time_data_source.dart'
@@ -43,8 +51,15 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
+    gh.factory<_i125.AzkarLocalDataSource>(() => _i125.AzkarLocalDataSource());
+    gh.factory<_i515.HadithLocalDataSource>(
+        () => _i515.HadithLocalDataSource());
     gh.factory<_i540.LocalDataSource>(() => _i540.LocalDataSource());
     gh.singleton<_i1047.ApiManager>(() => _i1047.ApiManager());
+    gh.factory<_i90.AzkarRepositoryImp>(() => _i90.AzkarRepositoryImp(
+        azkarLocalDataSource: gh<_i125.AzkarLocalDataSource>()));
+    gh.factory<_i539.HadithRepositoryImp>(() => _i539.HadithRepositoryImp(
+        localDataSource: gh<_i515.HadithLocalDataSource>()));
     gh.factory<_i375.PrayerTimeDataSource>(() =>
         _i288.PrayerTimeDataSourceImp(apiManager: gh<_i1047.ApiManager>()));
     gh.factory<_i683.NextPrayerTimeUseCase>(() => _i683.NextPrayerTimeUseCase(

@@ -5,6 +5,10 @@ import 'package:islami/core/api/api_manager.dart';
 import 'package:islami/features/Hadith_screen/data/repositories_impl/hadith_repository_imp.dart';
 import 'package:islami/features/Hadith_screen/presentation/blocs/cubit/hadith_cubit.dart';
 import 'package:islami/features/Hadith_screen/presentation/pages/Hadith_screen.dart';
+import 'package:islami/features/azkar_screen/data/data_sources/local_data_source.dart';
+import 'package:islami/features/azkar_screen/data/repositories_impl/azkar_repository_imp.dart';
+import 'package:islami/features/azkar_screen/presentation/blocs/cubit/azkar_cubit.dart';
+import 'package:islami/features/azkar_screen/presentation/pages/azkar_screen.dart';
 import 'package:islami/features/home_screen/data/data_sources/imp/prayer_time_data_source_imp.dart';
 import 'package:islami/features/home_screen/data/data_sources/prayer_time_data_source.dart';
 import 'package:islami/features/home_screen/data/repositories_impl/prayer_time_repository_imp.dart';
@@ -58,12 +62,23 @@ class AppRouter {
       case Routes.HadithScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (context) => HadithCubit(HadithRepositoryImp(localDataSource: HadithLocalDataSource()  )),
+                  create: (context) => HadithCubit(HadithRepositoryImp(
+                      localDataSource: HadithLocalDataSource())),
                   child: HadithScreen(),
                 ));
+        
       case Routes.sebhaScreen:
         return MaterialPageRoute(
             builder: (_) => SebhaScreen());
+
+      case Routes.AzkarScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => AzkarCubit(AzkarRepositoryImp(azkarLocalDataSource: AzkarLocalDataSource())),
+                  child: AzkarScreen(),
+                ));
+
+
 
       default:
         return null;
