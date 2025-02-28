@@ -21,6 +21,7 @@ import 'package:islami/features/quran_screen/data/repositories_impl/quran_reposi
 import 'package:islami/features/quran_screen/presentation/blocs/cubit/quran_cubit.dart';
 import 'package:islami/features/quran_screen/presentation/pages/quran_screen.dart';
 import 'package:islami/features/Hadith_screen/data/data_sources/local_data_source.dart';
+import 'package:islami/features/sebha_screen/presentation/pages/sebha_screen.dart';
 
 class AppRouter {
   static late PrayerTimeUseCase prayerTimeUseCase;
@@ -65,12 +66,19 @@ class AppRouter {
                       localDataSource: HadithLocalDataSource())),
                   child: HadithScreen(),
                 ));
+        
+      case Routes.sebhaScreen:
+        return MaterialPageRoute(
+            builder: (_) => SebhaScreen());
+
       case Routes.AzkarScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) => AzkarCubit(AzkarRepositoryImp(azkarLocalDataSource: AzkarLocalDataSource())),
                   child: AzkarScreen(),
                 ));
+
+
 
       default:
         return null;

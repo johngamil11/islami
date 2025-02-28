@@ -15,6 +15,7 @@ import 'package:islami/features/quran_screen/data/data_sources/local_data_source
 import 'package:islami/features/quran_screen/data/repositories_impl/quran_repository_imp.dart';
 import 'package:islami/features/quran_screen/presentation/blocs/cubit/quran_cubit.dart';
 import 'package:islami/features/quran_screen/presentation/pages/quran_screen.dart';
+import 'package:islami/features/sebha_screen/presentation/pages/sebha_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -55,9 +56,15 @@ class HomeScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          IconView(
-                            text: 'سبحة',
-                            image: 'assets/images/sebha.png',
+                          InkWell(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => SebhaScreen()));
+                            },
+                            child: IconView(
+                              text: 'سبحة',
+                              image: 'assets/images/sebha.png',
+                            ),
                           ),
                           SizedBox(
                             width: 10.w,
