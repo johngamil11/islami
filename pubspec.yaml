@@ -36,6 +36,7 @@ flutter:
   assets:
     - assets/images/
     - assets/files/
+    - assets/files/azkar/
     - assets/fonts/
 
   fonts:

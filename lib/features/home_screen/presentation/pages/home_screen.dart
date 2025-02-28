@@ -7,6 +7,7 @@ import 'package:islami/features/Hadith_screen/data/data_sources/local_data_sourc
 import 'package:islami/features/Hadith_screen/data/repositories_impl/hadith_repository_imp.dart';
 import 'package:islami/features/Hadith_screen/presentation/blocs/cubit/hadith_cubit.dart';
 import 'package:islami/features/Hadith_screen/presentation/pages/Hadith_screen.dart';
+import 'package:islami/features/azkar_screen/presentation/pages/azkar_screen.dart';
 import 'package:islami/features/home_screen/presentation/blocs/cubit/home_screen_cubit.dart';
 import 'package:islami/features/home_screen/presentation/widgets/icon_view.dart';
 import 'package:islami/features/home_screen/presentation/widgets/prayer_time.dart';
@@ -100,30 +101,39 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        IconView(
-                          text: 'القبلة',
-                          image: 'assets/images/kaaba.png',
-                        ),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        IconView(
-                          text: 'الاذكار',
-                          image: 'assets/images/azkar.png',
-                        ),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        IconView(
-                          text: 'راديو',
-                          image: 'assets/images/radio.png',
-                        ),
-                      ],
+                  Material(
+                     color: Colors.transparent,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconView(
+                            text: 'القبلة',
+                            image: 'assets/images/kaaba.png',
+                          ),
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          InkWell(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                              AzkarScreen()));
+                            },
+                            child: IconView(
+                              text: 'الاذكار',
+                              image: 'assets/images/azkar.png',
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          IconView(
+                            text: 'راديو',
+                            image: 'assets/images/radio.png',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
