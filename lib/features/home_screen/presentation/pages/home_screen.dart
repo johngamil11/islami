@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:islami/core/api/api_manager.dart';
 import 'package:islami/core/utils/color_manager.dart';
 import 'package:islami/core/utils/image_assets.dart';
 import 'package:islami/features/Hadith_screen/data/data_sources/local_data_source.dart';
@@ -11,6 +12,11 @@ import 'package:islami/features/azkar_screen/presentation/pages/azkar_screen.dar
 import 'package:islami/features/home_screen/presentation/blocs/cubit/home_screen_cubit.dart';
 import 'package:islami/features/home_screen/presentation/widgets/icon_view.dart';
 import 'package:islami/features/home_screen/presentation/widgets/prayer_time.dart';
+import 'package:islami/features/qiblah_screen/data/data_sources/imp/qibla_data_source_imp.dart';
+import 'package:islami/features/qiblah_screen/data/repositories_impl/qibla_repository_imp.dart';
+import 'package:islami/features/qiblah_screen/domain/use_cases/qiblah_use_case.dart';
+import 'package:islami/features/qiblah_screen/presentation/blocs/cubit/qibla_cubit.dart';
+import 'package:islami/features/qiblah_screen/presentation/pages/qiblah_screen.dart';
 import 'package:islami/features/quran_screen/data/data_sources/local_data_source.dart';
 import 'package:islami/features/quran_screen/data/repositories_impl/quran_repository_imp.dart';
 import 'package:islami/features/quran_screen/presentation/blocs/cubit/quran_cubit.dart';
@@ -115,9 +121,29 @@ class HomeScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          IconView(
-                            text: 'القبلة',
-                            image: 'assets/images/kaaba.png',
+                          InkWell(
+                            onTap: (){
+                              Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => BlocProvider(
+      create: (context) => QiblaCubit(
+        qiblahUseCase: QiblahUseCase(
+          qiblahRepository: QiblaRepositoryImp(
+            qiblaDataSource: QiblaDataSourceImp(apiManager: ApiManager()),
+          ),
+        ),
+      ),
+      child: QiblahScreen(),
+    ),
+  ),
+);
+
+                            },
+                            child: IconView(
+                              text: 'القبلة',
+                              image: 'assets/images/kaaba.png',
+                            ),
                           ),
                           SizedBox(
                             width: 10.w,

@@ -34,6 +34,18 @@ import '../../features/home_screen/domain/use_cases/prayer_time_use_case.dart'
     as _i830;
 import '../../features/home_screen/presentation/blocs/cubit/home_screen_cubit.dart'
     as _i282;
+import '../../features/qiblah_screen/data/data_sources/imp/qibla_data_source_imp.dart'
+    as _i143;
+import '../../features/qiblah_screen/data/data_sources/qibla_data_source.dart'
+    as _i490;
+import '../../features/qiblah_screen/data/repositories_impl/qibla_repository_imp.dart'
+    as _i716;
+import '../../features/qiblah_screen/domain/repositories/qiblah_repository.dart'
+    as _i104;
+import '../../features/qiblah_screen/domain/use_cases/qiblah_use_case.dart'
+    as _i959;
+import '../../features/qiblah_screen/presentation/blocs/cubit/qibla_cubit.dart'
+    as _i108;
 import '../../features/quran_screen/data/data_sources/local_data_source.dart'
     as _i540;
 import '../../features/quran_screen/data/repositories_impl/quran_repository_imp.dart'
@@ -51,11 +63,13 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i125.AzkarLocalDataSource>(() => _i125.AzkarLocalDataSource());
     gh.factory<_i515.HadithLocalDataSource>(
         () => _i515.HadithLocalDataSource());
     gh.factory<_i540.LocalDataSource>(() => _i540.LocalDataSource());
+    gh.factory<_i125.AzkarLocalDataSource>(() => _i125.AzkarLocalDataSource());
     gh.singleton<_i1047.ApiManager>(() => _i1047.ApiManager());
+    gh.factory<_i490.QiblaDataSource>(
+        () => _i143.QiblaDataSourceImp(apiManager: gh<_i1047.ApiManager>()));
     gh.factory<_i90.AzkarRepositoryImp>(() => _i90.AzkarRepositoryImp(
         azkarLocalDataSource: gh<_i125.AzkarLocalDataSource>()));
     gh.factory<_i539.HadithRepositoryImp>(() => _i539.HadithRepositoryImp(
@@ -66,6 +80,10 @@ extension GetItInjectableX on _i174.GetIt {
         homeScreenRepository: gh<_i302.PrayerTimeRepository>()));
     gh.factory<_i830.PrayerTimeUseCase>(() => _i830.PrayerTimeUseCase(
         homeScreenRepository: gh<_i302.PrayerTimeRepository>()));
+    gh.factory<_i104.QiblahRepository>(() =>
+        _i716.QiblaRepositoryImp(qiblaDataSource: gh<_i490.QiblaDataSource>()));
+    gh.factory<_i959.QiblahUseCase>(() =>
+        _i959.QiblahUseCase(qiblahRepository: gh<_i104.QiblahRepository>()));
     gh.factory<_i282.HomeScreenCubit>(() => _i282.HomeScreenCubit(
           prayerTimeUseCase: gh<_i830.PrayerTimeUseCase>(),
           nextPrayerTimeUseCase: gh<_i683.NextPrayerTimeUseCase>(),
@@ -75,6 +93,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i827.PrayerTimeRepositoryImp>(() =>
         _i827.PrayerTimeRepositoryImp(
             prayerTimeDataSource: gh<_i375.PrayerTimeDataSource>()));
+    gh.factory<_i108.QiblaCubit>(
+        () => _i108.QiblaCubit(qiblahUseCase: gh<_i959.QiblahUseCase>()));
     return this;
   }
 }
