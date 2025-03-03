@@ -8,6 +8,11 @@ import 'package:islami/features/Hadith_screen/data/data_sources/local_data_sourc
 import 'package:islami/features/Hadith_screen/data/repositories_impl/hadith_repository_imp.dart';
 import 'package:islami/features/Hadith_screen/presentation/blocs/cubit/hadith_cubit.dart';
 import 'package:islami/features/Hadith_screen/presentation/pages/Hadith_screen.dart';
+import 'package:islami/features/Radio_screen/data/data_sources/imp/radio_data_source_imp.dart';
+import 'package:islami/features/Radio_screen/data/repositories_impl/radio_repository_imp.dart';
+import 'package:islami/features/Radio_screen/domain/use_cases/radio_use_case.dart';
+import 'package:islami/features/Radio_screen/presentation/blocs/cubit/radio_cubit.dart';
+import 'package:islami/features/Radio_screen/presentation/pages/radio_screen.dart';
 import 'package:islami/features/azkar_screen/presentation/pages/azkar_screen.dart';
 import 'package:islami/features/home_screen/presentation/blocs/cubit/home_screen_cubit.dart';
 import 'package:islami/features/home_screen/presentation/widgets/icon_view.dart';
@@ -63,9 +68,11 @@ class HomeScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           InkWell(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => SebhaScreen()));
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SebhaScreen()));
                             },
                             child: IconView(
                               text: 'سبحة',
@@ -81,7 +88,10 @@ class HomeScreen extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => BlocProvider(
-                                            create: (context) => HadithCubit(HadithRepositoryImp(localDataSource: HadithLocalDataSource()  )),
+                                            create: (context) => HadithCubit(
+                                                HadithRepositoryImp(
+                                                    localDataSource:
+                                                        HadithLocalDataSource())),
                                             child: HadithScreen(),
                                           )));
                             },
@@ -115,30 +125,30 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Material(
-                     color: Colors.transparent,
+                    color: Colors.transparent,
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (context) => BlocProvider(
-      create: (context) => QiblaCubit(
-        qiblahUseCase: QiblahUseCase(
-          qiblahRepository: QiblaRepositoryImp(
-            qiblaDataSource: QiblaDataSourceImp(apiManager: ApiManager()),
-          ),
-        ),
-      ),
-      child: QiblahScreen(),
-    ),
-  ),
-);
-
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BlocProvider(
+                                    create: (context) => QiblaCubit(
+                                      qiblahUseCase: QiblahUseCase(
+                                        qiblahRepository: QiblaRepositoryImp(
+                                          qiblaDataSource: QiblaDataSourceImp(
+                                              apiManager: ApiManager()),
+                                        ),
+                                      ),
+                                    ),
+                                    child: QiblahScreen(),
+                                  ),
+                                ),
+                              );
                             },
                             child: IconView(
                               text: 'القبلة',
@@ -149,9 +159,11 @@ class HomeScreen extends StatelessWidget {
                             width: 10.w,
                           ),
                           InkWell(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                              AzkarScreen()));
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AzkarScreen()));
                             },
                             child: IconView(
                               text: 'الاذكار',
@@ -161,9 +173,29 @@ class HomeScreen extends StatelessWidget {
                           SizedBox(
                             width: 10.w,
                           ),
-                          IconView(
-                            text: 'راديو',
-                            image: 'assets/images/radio.png',
+                          InkWell(
+                             onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BlocProvider(
+                                    create: (context) => RadioCubit(
+                                      radioUseCase: RadioUseCase(
+                                        radioRepository: RadioRepositoryImp(
+                                          radioDataSource: RadioDataSourceImp(
+                                              apiManager: ApiManager()),
+                                        ),
+                                      ),
+                                    ),
+                                    child: RadioScreen(),
+                                  ),
+                                ),
+                              );
+                            },
+                            child: IconView(
+                              text: 'راديو',
+                              image: 'assets/images/radio.png',
+                            ),
                           ),
                         ],
                       ),
