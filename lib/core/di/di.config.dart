@@ -34,10 +34,32 @@ import '../../features/home_screen/domain/use_cases/prayer_time_use_case.dart'
     as _i830;
 import '../../features/home_screen/presentation/blocs/cubit/home_screen_cubit.dart'
     as _i282;
+import '../../features/qiblah_screen/data/data_sources/imp/qibla_data_source_imp.dart'
+    as _i143;
+import '../../features/qiblah_screen/data/data_sources/qibla_data_source.dart'
+    as _i490;
+import '../../features/qiblah_screen/data/repositories_impl/qibla_repository_imp.dart'
+    as _i716;
+import '../../features/qiblah_screen/domain/repositories/qiblah_repository.dart'
+    as _i104;
+import '../../features/qiblah_screen/domain/use_cases/qiblah_use_case.dart'
+    as _i959;
+import '../../features/qiblah_screen/presentation/blocs/cubit/qibla_cubit.dart'
+    as _i108;
 import '../../features/quran_screen/data/data_sources/local_data_source.dart'
     as _i540;
 import '../../features/quran_screen/data/repositories_impl/quran_repository_imp.dart'
     as _i166;
+import '../../features/Radio_screen/data/data_sources/imp/radio_data_source_imp.dart'
+    as _i866;
+import '../../features/Radio_screen/data/data_sources/radio_data_source.dart'
+    as _i670;
+import '../../features/Radio_screen/data/repositories_impl/radio_repository_imp.dart'
+    as _i984;
+import '../../features/Radio_screen/domain/repositories/radio_repository.dart'
+    as _i317;
+import '../../features/Radio_screen/domain/use_cases/radio_use_case.dart'
+    as _i10;
 import '../api/api_manager.dart' as _i1047;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -56,25 +78,39 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i515.HadithLocalDataSource());
     gh.factory<_i540.LocalDataSource>(() => _i540.LocalDataSource());
     gh.singleton<_i1047.ApiManager>(() => _i1047.ApiManager());
+    gh.factory<_i490.QiblaDataSource>(
+        () => _i143.QiblaDataSourceImp(apiManager: gh<_i1047.ApiManager>()));
     gh.factory<_i90.AzkarRepositoryImp>(() => _i90.AzkarRepositoryImp(
         azkarLocalDataSource: gh<_i125.AzkarLocalDataSource>()));
     gh.factory<_i539.HadithRepositoryImp>(() => _i539.HadithRepositoryImp(
         localDataSource: gh<_i515.HadithLocalDataSource>()));
+    gh.factory<_i670.RadioDataSource>(
+        () => _i866.RadioDataSourceImp(apiManager: gh<_i1047.ApiManager>()));
     gh.factory<_i375.PrayerTimeDataSource>(() =>
         _i288.PrayerTimeDataSourceImp(apiManager: gh<_i1047.ApiManager>()));
     gh.factory<_i683.NextPrayerTimeUseCase>(() => _i683.NextPrayerTimeUseCase(
         homeScreenRepository: gh<_i302.PrayerTimeRepository>()));
     gh.factory<_i830.PrayerTimeUseCase>(() => _i830.PrayerTimeUseCase(
         homeScreenRepository: gh<_i302.PrayerTimeRepository>()));
+    gh.factory<_i104.QiblahRepository>(() =>
+        _i716.QiblaRepositoryImp(qiblaDataSource: gh<_i490.QiblaDataSource>()));
+    gh.factory<_i959.QiblahUseCase>(() =>
+        _i959.QiblahUseCase(qiblahRepository: gh<_i104.QiblahRepository>()));
     gh.factory<_i282.HomeScreenCubit>(() => _i282.HomeScreenCubit(
           prayerTimeUseCase: gh<_i830.PrayerTimeUseCase>(),
           nextPrayerTimeUseCase: gh<_i683.NextPrayerTimeUseCase>(),
         ));
+    gh.factory<_i317.RadioRepository>(() =>
+        _i984.RadioRepositoryImp(radioDataSource: gh<_i670.RadioDataSource>()));
     gh.factory<_i166.QuranRepositoryImp>(() =>
         _i166.QuranRepositoryImp(localDataSource: gh<_i540.LocalDataSource>()));
     gh.factory<_i827.PrayerTimeRepositoryImp>(() =>
         _i827.PrayerTimeRepositoryImp(
             prayerTimeDataSource: gh<_i375.PrayerTimeDataSource>()));
+    gh.factory<_i108.QiblaCubit>(
+        () => _i108.QiblaCubit(qiblahUseCase: gh<_i959.QiblahUseCase>()));
+    gh.factory<_i10.RadioUseCase>(
+        () => _i10.RadioUseCase(radioRepository: gh<_i317.RadioRepository>()));
     return this;
   }
 }

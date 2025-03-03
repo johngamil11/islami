@@ -16,6 +16,12 @@ import 'package:islami/features/home_screen/domain/use_cases/next_prayer_time_us
 import 'package:islami/features/home_screen/domain/use_cases/prayer_time_use_case.dart';
 import 'package:islami/features/home_screen/presentation/blocs/cubit/home_screen_cubit.dart';
 import 'package:islami/features/home_screen/presentation/pages/home_screen.dart';
+import 'package:islami/features/qiblah_screen/data/data_sources/imp/qibla_data_source_imp.dart';
+import 'package:islami/features/qiblah_screen/data/repositories_impl/qibla_repository_imp.dart';
+import 'package:islami/features/qiblah_screen/domain/repositories/qiblah_repository.dart';
+import 'package:islami/features/qiblah_screen/domain/use_cases/qiblah_use_case.dart';
+import 'package:islami/features/qiblah_screen/presentation/blocs/cubit/qibla_cubit.dart';
+import 'package:islami/features/qiblah_screen/presentation/pages/qiblah_screen.dart';
 import 'package:islami/features/quran_screen/data/data_sources/local_data_source.dart';
 import 'package:islami/features/quran_screen/data/repositories_impl/quran_repository_imp.dart';
 import 'package:islami/features/quran_screen/presentation/blocs/cubit/quran_cubit.dart';
@@ -66,19 +72,26 @@ class AppRouter {
                       localDataSource: HadithLocalDataSource())),
                   child: HadithScreen(),
                 ));
-        
+
       case Routes.sebhaScreen:
-        return MaterialPageRoute(
-            builder: (_) => SebhaScreen());
+        return MaterialPageRoute(builder: (_) => SebhaScreen());
 
       case Routes.AzkarScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (context) => AzkarCubit(AzkarRepositoryImp(azkarLocalDataSource: AzkarLocalDataSource())),
+                  create: (context) => AzkarCubit(AzkarRepositoryImp(
+                      azkarLocalDataSource: AzkarLocalDataSource())),
                   child: AzkarScreen(),
                 ));
 
-
+      case Routes.qiblaScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => QiblaCubit(qiblahUseCase:QiblahUseCase
+                  (qiblahRepository: QiblaRepositoryImp(
+                    qiblaDataSource: QiblaDataSourceImp(apiManager: ApiManager()))) ),
+                  child: QiblahScreen(),
+                ));
 
       default:
         return null;

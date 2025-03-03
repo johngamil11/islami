@@ -6,11 +6,14 @@ import 'package:islami/config/routes.dart';
 import 'package:islami/core/di/di.dart';
 import 'package:islami/features/home_screen/presentation/pages/home_screen.dart';
 import 'package:islami/my_bloc_observer.dart';
+import 'package:just_audio/just_audio.dart';
 
 void main() {
   Bloc.observer = MyBlocObserver();
   configureDependencies();
   AppRouter.initialize();
+   WidgetsFlutterBinding.ensureInitialized();
+  AudioPlayer();
   runApp(const MyApp());
 }
 
