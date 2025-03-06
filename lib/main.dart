@@ -7,17 +7,24 @@ import 'package:islami/core/di/di.dart';
 import 'package:islami/features/home_screen/presentation/pages/home_screen.dart';
 import 'package:islami/my_bloc_observer.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   configureDependencies();
   AppRouter.initialize();
-   WidgetsFlutterBinding.ensureInitialized();
   AudioPlayer();
+
+  final prefs = await SharedPreferences.getInstance();
+  MyApp.showOnboarding = prefs.getBool('onboardingCompleted') == null || !prefs.getBool('onboardingCompleted')!;
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  static bool showOnboarding = true;
+
   const MyApp({super.key});
 
   @override
@@ -26,13 +33,12 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (_ , child) {
+      builder: (_, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: child,
           locale: Locale('ar'),
           onGenerateRoute: AppRouter.generateRoute,
-          initialRoute: Routes.homeScreen,
+          initialRoute: showOnboarding ? Routes.startScreen : Routes.homeScreen,
         );
       },
     );

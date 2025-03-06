@@ -28,6 +28,7 @@ import 'package:islami/features/quran_screen/presentation/blocs/cubit/quran_cubi
 import 'package:islami/features/quran_screen/presentation/pages/quran_screen.dart';
 import 'package:islami/features/Hadith_screen/data/data_sources/local_data_source.dart';
 import 'package:islami/features/sebha_screen/presentation/pages/sebha_screen.dart';
+import 'package:islami/features/start_screen/presentation/pages/start_screen.dart';
 
 class AppRouter {
   static late PrayerTimeUseCase prayerTimeUseCase;
@@ -92,6 +93,10 @@ class AppRouter {
                     qiblaDataSource: QiblaDataSourceImp(apiManager: ApiManager()))) ),
                   child: QiblahScreen(),
                 ));
+
+      case Routes.startScreen:
+        return MaterialPageRoute(
+            builder: (_) => StartScreen());
 
       default:
         return null;
