@@ -5,5 +5,6 @@ class Routes {
   static const String sebhaScreen = 'sebha_screen';   
   static const String AzkarScreen = 'azkar_screen';   
   static const String qiblaScreen = 'qibla_screen';   
+  static const String startScreen = 'start_screen';   
 
 }

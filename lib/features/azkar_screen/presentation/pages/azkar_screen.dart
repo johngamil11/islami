@@ -1,16 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:islami/core/utils/color_manager.dart';
 import 'package:islami/core/utils/image_assets.dart';
-import 'package:islami/features/Hadith_screen/presentation/blocs/cubit/hadith_cubit.dart';
-import 'package:islami/features/Hadith_screen/presentation/widgets/hadith_view.dart';
-import 'package:islami/features/azkar_screen/data/data_sources/local_data_source.dart';
-import 'package:islami/features/azkar_screen/data/repositories_impl/azkar_repository_imp.dart';
-import 'package:islami/features/azkar_screen/presentation/blocs/cubit/azkar_cubit.dart';
-import 'package:islami/features/azkar_screen/presentation/pages/azkar_details_screen.dart';
-import 'package:islami/features/azkar_screen/presentation/widgets/azkar_icon.dart';
 import 'package:islami/features/azkar_screen/presentation/widgets/azkar_model.dart';
 
 class AzkarScreen extends StatelessWidget {
