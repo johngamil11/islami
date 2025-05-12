@@ -173,6 +173,7 @@ class QuranScreen extends StatelessWidget {
                         child: QuranDetailsScreen(
                           
                           title: state[index],
+                        
                         ),
                       ),
                     ),
